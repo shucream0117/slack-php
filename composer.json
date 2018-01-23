@@ -1,0 +1,21 @@
+{
+  "name": "shucream0117/slack-php",
+  "description": "Slack library for PHP",
+  "keywords": ["slack"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "shucream0117"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "guzzlehttp/guzzle": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shucream0117\\SlackPHP\\": "src/"
+    }
+  }
+}
