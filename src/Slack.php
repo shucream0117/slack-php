@@ -3,7 +3,6 @@
 namespace Shucream0117\SlackPHP;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 
 class Slack
 {
@@ -21,13 +20,17 @@ class Slack
 
     /**
      * @param string $message
-     * @throws RequestException
+     * @param bool $linkNames
      */
-    public function send(string $message): void
+    public function send(string $message, bool $linkNames = true): void
     {
+        $params = ['text' => $message];
+        if ($linkNames) {
+            $params['link_names'] = 1;
+        }
         $this->httpClient->post($this->incomingWebHookUrl, [
             'form_params' => [
-                'payload' => json_encode(['text' => $message]),
+                'payload' => json_encode($params),
             ],
         ]);
     }
