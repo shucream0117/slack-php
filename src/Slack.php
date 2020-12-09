@@ -6,31 +6,48 @@ use GuzzleHttp\Client;
 
 class Slack
 {
-    /** @var string */
-    private $incomingWebHookUrl;
+    private string $incomingWebHookUrl;
+    private Client $httpClient;
+    private array $params = [];
 
-    /** @var Client */
-    private $httpClient;
-
-    public function __construct(string $url, Client $client = null)
+    public function __construct(string $webhookUrl, Client $client = null)
     {
-        $this->incomingWebHookUrl = $url;
+        $this->incomingWebHookUrl = $webhookUrl;
         $this->httpClient = $client ?: new Client();
+    }
+
+    public function setChannel(string $channel): self
+    {
+        $this->params['channel'] = $channel;
+        return $this;
+    }
+
+    public function setUserName(string $userName): self
+    {
+        $this->params['username'] = $userName;
+        return $this;
+    }
+
+    public function setIconEmoji(string $iconEmoji): self
+    {
+        $this->params['icon_emoji'] = $iconEmoji;
+        return $this;
+    }
+
+    public function setLinkNames(bool $linkNames): self
+    {
+        $this->params['link_names'] = (int)$linkNames;
+        return $this;
     }
 
     /**
      * @param string $message
-     * @param bool $linkNames
      */
-    public function send(string $message, bool $linkNames = true): void
+    public function send(string $message): void
     {
-        $params = ['text' => $message];
-        if ($linkNames) {
-            $params['link_names'] = 1;
-        }
         $this->httpClient->post($this->incomingWebHookUrl, [
             'form_params' => [
-                'payload' => json_encode($params),
+                'payload' => json_encode(array_merge($this->params, ['text' => $message])),
             ],
         ]);
     }
