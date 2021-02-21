@@ -34,6 +34,10 @@ class Slack
         return $this;
     }
 
+    /**
+     * @see https://api.slack.com/changelog/2017-09-the-one-about-usernames
+     * @deprecated
+     */
     public function setLinkNames(bool $linkNames): self
     {
         $this->params['link_names'] = (int)$linkNames;
