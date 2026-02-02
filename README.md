@@ -2,7 +2,7 @@
 
 ## Requirement
 
-- PHP >= 7.4.x
+- PHP >= 7.4.0
 - Incoming WebHook URL via Slack Apps
   - https://api.slack.com/messaging/webhooks
 
